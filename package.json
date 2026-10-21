@@ -1,0 +1,20 @@
+{
+  "name": "p1-sistema-reserves",
+  "version": "1.0.0",
+  "description": "Sistema complet amb autenticació JWT i CRUD",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "db-local": "^3.1.0",
+    "ejs": "^7.0.2",
+    "express": "^4.22.3",
+    "jsonwebtoken": "^9.0.3"
+  }
+}

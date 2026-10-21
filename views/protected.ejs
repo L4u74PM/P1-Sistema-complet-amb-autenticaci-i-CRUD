@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panell</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Hola, <%= user.username %>!</h1>
+        <nav>
+            <a href="/protected">Panell</a>
+            <a href="/manage/resources">Recursos</a>
+            <a href="/manage/bookings">Reserves</a>
+            <a href="/profile">Perfil</a>
+            <a href="/logout">Sortir</a>
+        </nav>
+    </header>
+    <main>
+        <p>Aquesta pàgina només és visible per a usuaris autenticats. El teu rol és: <strong><%= user.role %></strong></p>
+
+        <section>
+            <h2>Recursos disponibles</h2>
+            <ul>
+                <% resources.forEach(resource => { %>
+                    <li>
+                        <strong><%= resource.name %></strong>
+                        <span>Tipus: <%= resource.type %></span>
+                        <span>Capacitat: <%= resource.capacity %></span>
+                    </li>
+                <% }) %>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Les meves reserves</h2>
+            <% if (bookings.length === 0) { %>
+                <p>Encara no tens cap reserva.</p>
+            <% } else { %>
+                <ul>
+                    <% bookings.forEach(booking => { %>
+                        <li>
+                            <strong><%= booking.resourceName %></strong>
+                            <span>Inici: <%= new Date(booking.start).toLocaleString('ca-ES') %></span>
+                            <span>Fi: <%= new Date(booking.end).toLocaleString('ca-ES') %></span>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
+        </section>
+
+        <section>
+            <h2>Les meves notificacions</h2>
+            <% if (notifications.length === 0) { %>
+                <p>No tens notificacions.</p>
+            <% } else { %>
+                <ul>
+                    <% notifications.forEach(n => { %>
+                        <li>
+                            <%= n.message %>
+                            <span><%= new Date(n.date).toLocaleString('ca-ES') %></span>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "userId": "00000000-0000-4000-8000-000000000002",
+    "message": "Reserva #1 creada correctament",
+    "date": "2026-10-18T09:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "userId": "00000000-0000-4000-8000-000000000003",
+    "message": "Reserva #2 creada correctament",
+    "date": "2026-10-18T09:00:00.000Z"
+  }
+]

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserves</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script src="/js/bookings.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Reserves</h1>
+        <nav>
+            <a href="/protected">Panell</a>
+            <a href="/manage/resources">Recursos</a>
+            <a href="/manage/bookings">Reserves</a>
+            <a href="/profile">Perfil</a>
+            <a href="/logout">Sortir</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2><%= user.role === 'admin' ? 'Totes les reserves' : 'Les meves reserves' %></h2>
+            <% if (bookings.length === 0) { %>
+                <p>No hi ha cap reserva.</p>
+            <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Recurs</th>
+                        <% if (user.role === 'admin') { %><th>Usuari</th><% } %>
+                        <th>Inici</th><th>Fi</th><th>Accions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% bookings.forEach(b => { %>
+                        <tr>
+                            <td><%= b.id %></td>
+                            <td><%= b.resourceName %></td>
+                            <% if (user.role === 'admin') { %><td><%= b.ownerName %></td><% } %>
+                            <td><%= new Date(b.start).toLocaleString('ca-ES') %></td>
+                            <td><%= new Date(b.end).toLocaleString('ca-ES') %></td>
+                            <td>
+                                <button class="small" data-edit="<%= b.id %>" data-resource="<%= b.resourceId %>" data-start="<%= b.start %>" data-end="<%= b.end %>">Editar</button>
+                                <button class="small danger" data-delete="<%= b.id %>">Cancel·lar</button>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <% } %>
+        </section>
+
+        <section>
+            <h2 id="form-title">Nova reserva</h2>
+            <% if (resources.length === 0) { %>
+                <p>No hi ha recursos per reservar.</p>
+            <% } else { %>
+            <form id="booking-form">
+                <label for="bk-resource">Recurs:</label>
+                <select id="bk-resource" required>
+                    <% resources.forEach(r => { %>
+                        <option value="<%= r.id %>"><%= r.name %> (<%= r.type %>, cap. <%= r.capacity %>)</option>
+                    <% }) %>
+                </select>
+
+                <label for="bk-start">Inici:</label>
+                <input type="datetime-local" id="bk-start" required>
+
+                <label for="bk-end">Fi:</label>
+                <input type="datetime-local" id="bk-end" required>
+
+                <button type="submit" id="save-btn">Reservar</button>
+                <button type="button" id="cancel-edit" class="secondary" hidden>Cancel·lar edició</button>
+            </form>
+            <% } %>
+        </section>
+
+        <p id="message"></p>
+    </main>
+</body>
+</html>

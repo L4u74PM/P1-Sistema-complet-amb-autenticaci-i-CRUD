@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script src="/js/resources.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Recursos</h1>
+        <nav>
+            <a href="/protected">Panell</a>
+            <a href="/manage/resources">Recursos</a>
+            <a href="/manage/bookings">Reserves</a>
+            <a href="/profile">Perfil</a>
+            <a href="/logout">Sortir</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Llista de recursos</h2>
+            <% if (resources.length === 0) { %>
+                <p>No hi ha cap recurs.</p>
+            <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Nom</th><th>Tipus</th><th>Capacitat</th>
+                        <% if (user.role === 'admin') { %><th>Accions</th><% } %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% resources.forEach(r => { %>
+                        <tr>
+                            <td><%= r.id %></td>
+                            <td><%= r.name %></td>
+                            <td><%= r.type %></td>
+                            <td><%= r.capacity %></td>
+                            <% if (user.role === 'admin') { %>
+                                <td>
+                                    <button class="small" data-edit="<%= r.id %>" data-name="<%= r.name %>" data-type="<%= r.type %>" data-capacity="<%= r.capacity %>">Editar</button>
+                                    <button class="small danger" data-delete="<%= r.id %>">Eliminar</button>
+                                </td>
+                            <% } %>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <% } %>
+        </section>
+
+        <% if (user.role === 'admin') { %>
+        <section>
+            <h2 id="form-title">Nou recurs</h2>
+            <form id="resource-form">
+                <label for="res-name">Nom:</label>
+                <input type="text" id="res-name" required minlength="2">
+
+                <label for="res-type">Tipus (sala, aula, material...):</label>
+                <input type="text" id="res-type" required minlength="2">
+
+                <label for="res-capacity">Capacitat:</label>
+                <input type="number" id="res-capacity" required min="1" step="1">
+
+                <button type="submit" id="save-btn">Crear recurs</button>
+                <button type="button" id="cancel-edit" class="secondary" hidden>Cancel·lar edició</button>
+            </form>
+        </section>
+        <% } else { %>
+            <p class="muted">Només l'administrador pot crear, modificar o eliminar recursos.</p>
+        <% } %>
+
+        <p id="message"></p>
+    </main>
+</body>
+</html>

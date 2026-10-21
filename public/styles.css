@@ -1,0 +1,30 @@
+body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; color: #333; }
+header { background: #4caf50; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+header h1 { margin: 0; font-size: 1.4rem; }
+nav a { color: white; margin-left: 1rem; text-decoration: none; }
+main { max-width: 800px; margin: 1.5rem auto; padding: 0 1rem; }
+section { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 1rem 1.5rem; margin-bottom: 1rem; }
+ul { list-style: none; padding: 0; }
+li { padding: .5rem; border-bottom: 1px solid #eee; }
+li span { margin-left: 1rem; color: #666; font-size: .9rem; }
+label { display: block; margin-top: .6rem; }
+input { width: 100%; padding: .5rem; box-sizing: border-box; margin-top: .2rem; }
+button { margin-top: 1rem; padding: .5rem 1.2rem; background: #4caf50; color: white; border: 0; border-radius: 4px; cursor: pointer; }
+.error { background: #fdd; color: #900; padding: .7rem; border-radius: 4px; }
+.success { background: #dfd; color: #060; padding: .7rem; border-radius: 4px; }
+
+/* Pàgina de login i registre */
+.container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+.form-container { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 1rem 1.5rem; flex: 1 1 320px; max-width: 420px; }
+.form-container span { margin-left: .8rem; font-size: .9rem; }
+.form-container a { margin-left: 1rem; }
+
+/* Pàgines de gestió (CRUD) */
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: .5rem; border-bottom: 1px solid #eee; }
+select, input[type="number"], input[type="datetime-local"] { width: 100%; padding: .5rem; box-sizing: border-box; margin-top: .2rem; }
+button.small { padding: .2rem .6rem; font-size: .85rem; margin-top: 0; }
+button.danger { background: #d32f2f; }
+button.secondary { background: #777; margin-left: .5rem; }
+.muted { color: #666; }
+#message { font-weight: bold; }

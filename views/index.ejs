@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de reserves</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema de reserves</h1>
+        <nav>
+            <% if (user) { %>
+                <a href="/protected">Panell</a>
+                <a href="/manage/resources">Recursos</a>
+                <a href="/manage/bookings">Reserves</a>
+                <a href="/profile">Perfil</a>
+                <a href="/logout">Sortir (<%= user.username %>)</a>
+            <% } else { %>
+                <a href="/login">Entrar</a>
+            <% } %>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Benvingut!</h2>
+            <p>Reserva sales, aules i material de manera senzilla.</p>
+            <% if (user) { %>
+                <p>Has iniciat sessió com a <strong><%= user.username %></strong>.</p>
+            <% } else { %>
+                <p>Inicia sessió o crea un compte per gestionar les teves reserves.</p>
+            <% } %>
+        </section>
+    </main>
+</body>
+</html>

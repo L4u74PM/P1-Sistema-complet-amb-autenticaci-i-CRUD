@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>El meu perfil</h1>
+        <nav>
+            <a href="/protected">Panell</a>
+            <a href="/manage/resources">Recursos</a>
+            <a href="/manage/bookings">Reserves</a>
+            <a href="/profile">Perfil</a>
+            <a href="/logout">Sortir</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Dades de l'usuari</h2>
+            <ul>
+                <li><strong>Identificador:</strong> <%= profile._id %></li>
+                <li><strong>Usuari:</strong> <%= profile.username %></li>
+                <li><strong>Rol:</strong> <%= profile.role %></li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

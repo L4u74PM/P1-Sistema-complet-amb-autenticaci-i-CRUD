@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Sala de reunions A",
+    "type": "sala",
+    "capacity": 10
+  },
+  {
+    "id": 2,
+    "name": "Aula d'informàtica",
+    "type": "aula",
+    "capacity": 20
+  },
+  {
+    "id": 3,
+    "name": "Projector portàtil",
+    "type": "material",
+    "capacity": 1
+  }
+]

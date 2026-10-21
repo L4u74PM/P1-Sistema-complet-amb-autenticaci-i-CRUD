@@ -1,0 +1,151 @@
+### Proves amb l'extensió REST Client de VS Code
+### Primer executa els dos logins (guarden el token), després la resta.
+
+### ============ AUTENTICACIÓ ============
+
+### Registre
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{ "username": "anna", "password": "Anna12345" }
+
+### Registre amb usuari repetit (409)
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{ "username": "anna", "password": "Anna12345" }
+
+### Registre amb contrasenya feble (400)
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{ "username": "anna2", "password": "123" }
+
+### Login ADMIN
+# @name loginAdmin
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{ "username": "admin", "password": "Admin1234" }
+
+###
+@adminToken = {{loginAdmin.response.body.token}}
+
+### Login USUARI (maria)
+# @name loginMaria
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{ "username": "maria", "password": "Maria1234" }
+
+###
+@mariaToken = {{loginMaria.response.body.token}}
+
+### Login incorrecte (401)
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{ "username": "maria", "password": "Incorrecta1" }
+
+### Sense token (401)
+GET http://localhost:3000/resources
+
+### Logout
+POST http://localhost:3000/logout
+Content-Type: application/json
+
+### ============ RECURSOS (CRUD 1) ============
+
+### Llistar recursos
+GET http://localhost:3000/resources
+Authorization: Bearer {{mariaToken}}
+
+### Veure un recurs
+GET http://localhost:3000/resources/1
+Authorization: Bearer {{mariaToken}}
+
+### Crear recurs (admin)
+POST http://localhost:3000/resources
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{ "name": "Sala de formació", "type": "sala", "capacity": 12 }
+
+### Crear recurs sent usuari normal (403)
+POST http://localhost:3000/resources
+Authorization: Bearer {{mariaToken}}
+Content-Type: application/json
+
+{ "name": "Intent", "type": "sala", "capacity": 5 }
+
+### Crear recurs amb dades incorrectes (400)
+POST http://localhost:3000/resources
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{ "name": "A", "type": "sala", "capacity": -3 }
+
+### Modificar recurs (admin)
+PUT http://localhost:3000/resources/4
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{ "capacity": 15 }
+
+### Eliminar recurs (admin)
+DELETE http://localhost:3000/resources/4
+Authorization: Bearer {{adminToken}}
+
+### ============ RESERVES (CRUD 2) ============
+
+### Llistar les meves reserves
+GET http://localhost:3000/bookings
+Authorization: Bearer {{mariaToken}}
+
+### Crear reserva
+# @name newBooking
+POST http://localhost:3000/bookings
+Authorization: Bearer {{mariaToken}}
+Content-Type: application/json
+
+{ "resourceId": 3, "start": "2027-05-10T10:00:00Z", "end": "2027-05-10T12:00:00Z" }
+
+###
+@bookingId = {{newBooking.response.body.id}}
+
+### Crear reserva que se solapa (409)
+POST http://localhost:3000/bookings
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{ "resourceId": 3, "start": "2027-05-10T11:00:00Z", "end": "2027-05-10T13:00:00Z" }
+
+### Reserva amb dates incorrectes (400)
+POST http://localhost:3000/bookings
+Authorization: Bearer {{mariaToken}}
+Content-Type: application/json
+
+{ "resourceId": 3, "start": "2027-05-10T12:00:00Z", "end": "2027-05-10T10:00:00Z" }
+
+### Veure una reserva
+GET http://localhost:3000/bookings/{{bookingId}}
+Authorization: Bearer {{mariaToken}}
+
+### Veure la reserva d'un altre usuari (403): la reserva 2 és de joan
+GET http://localhost:3000/bookings/2
+Authorization: Bearer {{mariaToken}}
+
+### Modificar reserva
+PUT http://localhost:3000/bookings/{{bookingId}}
+Authorization: Bearer {{mariaToken}}
+Content-Type: application/json
+
+{ "end": "2027-05-10T11:30:00Z" }
+
+### Eliminar reserva
+DELETE http://localhost:3000/bookings/{{bookingId}}
+Authorization: Bearer {{mariaToken}}
+
+### L'admin veu totes les reserves
+GET http://localhost:3000/bookings
+Authorization: Bearer {{adminToken}}
